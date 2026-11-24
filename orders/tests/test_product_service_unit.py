@@ -1,30 +1,26 @@
-# orders/tests/test_product_service_unit.py
+from unittest import TestCase
+from unittest.mock import Mock
 
-import unittest
-from unittest.mock import patch
+from orders.models import Product
+from orders.services.product_service import ProductService
 
-from orders.entities.product import Product
-from orders.services.implementations.product_service import ProductService
 
-class MyUnitTests(unittest.TestCase):
-    @patch('orders.services.implementations.product_service.ns')
-    @patch('orders.services.implementations.product_service.pr')
-    def test_notify_delay(self, mock_pr, mock_ns):
-        p = Product(
+class ProductServiceTests(TestCase):
+    def test_notify_delay_saves_product_and_sends_notification(self):
+        product = Product(
             name="RJ45 Cable",
             type="NORMAL",
             available=0,
             lead_time=15,
         )
-        mock_pr.save.return_value = p
-        ps = ProductService()
+        repository = Mock()
+        notifications = Mock()
+        service = ProductService(repository, notifications)
 
-        ps.notify_delay(p.lead_time, p)
+        service.notify_delay(product.lead_time, product)
 
-        self.assertEqual(0, p.available)
-        self.assertEqual(15, p.lead_time)
-        mock_pr.save.assert_called_once_with(p)
-        mock_ns.send_delay_notification.assert_called_once_with(p.lead_time, p.name)
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertEqual(product.available, 0)
+        repository.save.assert_called_once_with(product)
+        notifications.send_delay_notification.assert_called_once_with(
+            15, "RJ45 Cable"
+        )
