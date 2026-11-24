@@ -1,4 +1,4 @@
-from ..entities.product import Product
+from ..models import Product
 
 class ProductRepository:
     def find_by_id(self, id):
@@ -6,5 +6,3 @@ class ProductRepository:
 
     def save(self, p):
         p.save()
-
-pr = ProductRepository()

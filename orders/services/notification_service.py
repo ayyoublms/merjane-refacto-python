@@ -17,5 +17,3 @@ class NotificationService:
         Notify that a product has expired or is expiring.
         """
         pass
-
-ns = NotificationService()

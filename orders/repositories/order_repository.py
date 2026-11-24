@@ -1,4 +1,4 @@
-from ..entities.order import Order
+from ..models import Order
 
 class OrderRepository:
     def find_by_id(self, id):
@@ -6,5 +6,3 @@ class OrderRepository:
 
     def save(self, o):
         o.save()
-
-or_ = OrderRepository()

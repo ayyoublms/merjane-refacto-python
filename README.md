@@ -35,3 +35,8 @@
 ## Instructions
 
 - Do not modify any classes marked with the comment: `# WARN: Should not be changed during the exercise`
+
+## Project documentation
+
+See [docs/README.md](docs/README.md) for the project map, order-processing flow,
+business behavior, and test coverage.
